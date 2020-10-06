@@ -89,10 +89,11 @@ def get_all_data():
     seasons = range(2015,2021)
     df = pd.concat([values_from_season(season) for season in seasons])
     # Next line never run
-    df = df[['Cod.', 'Nome', 'Ruolo', 'Team', 'Week', 'Season',
+    df = df[['Nome', 'Ruolo', 'Team', 'Week', 'Season',
          'Voto_Fantacalcio', 'sv_Fantacalcio', 'Voto_Italia', 'sv_Italia', 'Voto_Statistico', 'sv_Statistico',
          'Gf', 'Gs', 'Rp', 'Rs', 'Rf', 'Au', 'Amm', 'Esp', 'Ass', 'Asf', 'Gdv', 'Gdp'
-       ]].rename(columns={'Cod.': 'Fantacalcio_id'})
+       ]]
+    df.index.name = 'Fantacalcio_id'
     df.to_csv(f'{cd()}/Output_FC/output_fc.csv')
     return df
 
@@ -103,6 +104,7 @@ def players_csv(df):
     cod_name['Fantacalcio_id'] = cod_name['Fantacalcio_id'].astype(int)
     # cod_name = cod_name.rename(columns={'Cod.': 'Fantacalcio_id'})
     cod_name.to_csv('DB/fantacalcio_players.csv', index=False)
+
 
 df = get_all_data()
 # players_csv(df)
