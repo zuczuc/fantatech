@@ -91,7 +91,7 @@ def get_all_data():
     df = pd.concat([values_from_season(season) for season in seasons]).reset_index()
     return df
     # Next line never run
-    df = df[['Cod.', 'Nome', 'Ruolo', 'Team', 'Week', 'Season',
+    df = df[['Nome', 'Ruolo', 'Team', 'Week', 'Season',
          'Voto_Fantacalcio', 'sv_Fantacalcio', 'Voto_Italia', 'sv_Italia', 'Voto_Statistico', 'sv_Statistico',
          'Gf', 'Gs', 'Rp', 'Rs', 'Rf', 'Au', 'Amm', 'Esp', 'Ass', 'Asf', 'Gdv', 'Gdp'
        ]].rename(columns={'Cod.': 'Fantacalcio_id'})
