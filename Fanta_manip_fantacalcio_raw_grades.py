@@ -10,11 +10,12 @@ import os
 import pandas as pd
 from xlrd import open_workbook
 
+from fantatech.constants import ROOT_DIR
 
 
 def  cd():
-    return os.getcwd().replace("\\","/")
-
+    # return os.getcwd().replace("\\","/")
+    return os.path.join(ROOT_DIR, 'data/downloaded/')
 
 def values_from_row(sheet, row):
     return [v.value for v in sheet.row(row)]
@@ -66,7 +67,7 @@ def values_from_book(book):
     return old_df
 
 def values_from_week(season, week):
-    file_path = f'{cd()}/Input_FC/{season}_{season-1999}'
+    file_path = f'{cd()}/{season}_{season-1999}'
     file_name = f'{file_path }/Voti_Fantacalcio_Stagione_{season}-{season-1999}_Giornata_{week}.xlsx'
     book = open_workbook(file_name, on_demand=True)
     df = values_from_book(book)
@@ -75,7 +76,7 @@ def values_from_week(season, week):
 
 
 def values_from_season(season):
-    file_path = f'{cd()}/Input_FC/{season}_{season-1999}'
+    file_path = f'{cd()}/{season}_{season-1999}'
     xls_file_names = os.listdir(file_path)
     weeks = [w for w in range(1,39) if f'Voti_Fantacalcio_Stagione_{season}-{season-1999}_Giornata_{w}.xlsx' in xls_file_names]
     print(f'Fetching data for season {season}')
@@ -87,13 +88,14 @@ def values_from_season(season):
 
 def get_all_data():
     seasons = range(2015,2021)
-    df = pd.concat([values_from_season(season) for season in seasons])
+    df = pd.concat([values_from_season(season) for season in seasons]).reset_index()
+    return df
     # Next line never run
     df = df[['Cod.', 'Nome', 'Ruolo', 'Team', 'Week', 'Season',
          'Voto_Fantacalcio', 'sv_Fantacalcio', 'Voto_Italia', 'sv_Italia', 'Voto_Statistico', 'sv_Statistico',
          'Gf', 'Gs', 'Rp', 'Rs', 'Rf', 'Au', 'Amm', 'Esp', 'Ass', 'Asf', 'Gdv', 'Gdp'
        ]].rename(columns={'Cod.': 'Fantacalcio_id'})
-    df.to_csv(f'{cd()}/Output_FC/output_fc.csv')
+    df.to_csv(f'{cd()}/output_fc.csv')
     return df
 
 
@@ -104,5 +106,5 @@ def players_csv(df):
     # cod_name = cod_name.rename(columns={'Cod.': 'Fantacalcio_id'})
     cod_name.to_csv('DB/fantacalcio_players.csv', index=False)
 
-df = get_all_data()
+# df = get_all_data()
 # players_csv(df)

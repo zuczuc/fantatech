@@ -1,0 +1,8 @@
+ <body class="two-column-layout sub-fantacalcio type-categoria magic-voti stopPageRefresh magic-competizione-21" id="calcio">
+  <section class="main-container">
+   <section class="section-standard-row">
+    <div class="MXXX-central-articles-main-column">
+     <div class="magicDayList listView magicDayListChkDay">
+      <div class="singleRound">
+       <div class="magicTeamListContainer">
+        <ul class="magicTeamList">
